@@ -44,6 +44,15 @@
   .link-main a{font-weight:600;color:var(--ink);text-decoration:none;font-size:15px;}
   .link-main a:hover{text-decoration:underline;}
   .link-main .link-title{font-weight:600;color:var(--ink);font-size:15px;}
+  .block-card{background:#fff;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;padding:0;}
+  .block-card summary{font-weight:600;color:var(--ink);font-size:15px;padding:12px 14px;cursor:pointer;list-style:none;}
+  .block-card summary::-webkit-details-marker{display:none;}
+  .block-card summary::before{content:'▸ ';color:var(--limestone);}
+  .block-card[open] summary::before{content:'▾ ';}
+  .block-body{padding:0 14px 12px;font-size:13px;color:#4a4636;line-height:1.5;}
+  .block-body .taxi{margin-bottom:12px;}
+  .block-body .taxi-name{font-weight:600;color:var(--ink);}
+  .block-body .taxi-meta{color:#6b6656;}
   .link-main .notes{font-size:13px;color:#6b6656;margin-top:3px;}
   .map-link{display:inline-block;margin-top:6px;font-size:12px;font-weight:600;color:var(--ocean);text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:2px 8px;}
   .map-link:hover{background:var(--parchment-2);}
@@ -123,6 +132,18 @@ const LINKS = [
   {region:'bordeaux', category:'Activity', title:'Wine: Cité du Vin', url:'https://www.laciteduvin.com/en', notes:'Bordeaux'},
   {region:'bordeaux', category:'Guide / Reading', title:'Rick Steves forum — Bordeaux', url:'https://community.ricksteves.com/travel-forum/france/bordeaux-26f87354-3b50-41e7-9349-a8d7f19eb845', notes:''},
   {region:'bordeaux', category:'Guide / Reading', title:'Reddit — Bordeaux travel search', url:'https://www.reddit.com/search/?q=bordeaux+travel', notes:''},
+  {region:'bordeaux', category:'Other', title:'Taxis (English spoken)', block:`
+    <div class="taxi"><span class="taxi-name">Taxi Lefevre33</span> — Saint-Laurent-des-Combes<br><span class="taxi-meta">+33 (0)6 76 84 72 72 · contact@taxislefevre33.com</span></div>
+    <div class="taxi"><span class="taxi-name">Asset Taxi (n°1)</span> — Montagne<br><span class="taxi-meta">+33 (0)6 23 61 92 60 · assetaxi@gmail.com · English &amp; español</span></div>
+    <div class="taxi"><span class="taxi-name">Magistair Taxi</span> — Saint-Magne-de-Castillon<br><span class="taxi-meta">+33 (0)6 06 45 48 74 · contact@magistair.com</span></div>
+    <div class="taxi"><span class="taxi-name">Bordeaux Personal Chauffeur</span> — Sainte-Terre<br><span class="taxi-meta">+33 (0)6 78 55 77 50 · contact@bordeauxpersonalchauffeur.fr</span></div>
+    <div class="taxi"><span class="taxi-name">CVN Taxi (n°1)</span> — Saint-Émilion<br><span class="taxi-meta">+33 (0)6 63 91 94 30 · cvntaxi@hotmail.com</span></div>
+    <div class="taxi"><span class="taxi-name">Taxi Richard</span> — Sainte-Terre<br><span class="taxi-meta">+33 (0)6 60 71 77 37 · ruffetrichard@hotmail.fr</span></div>
+    <div class="taxi"><span class="taxi-name">ECM (n°2)</span> — Libourne<br><span class="taxi-meta">+33 (0)6 09 33 37 77 · taxiecm@aol.fr · English &amp; español</span></div>
+    <div class="taxi"><span class="taxi-name">Taxi n°9</span> — Libourne<br><span class="taxi-meta">+33 (0)6 59 85 48 40 · taxilouis33@gmail.com · English &amp; español</span></div>
+    <div class="taxi"><span class="taxi-name">Mon Taxi Libourne (n°10)</span> — Libourne<br><span class="taxi-meta">+33 (0)6 45 27 83 21 · English &amp; español</span></div>
+    <div class="taxi"><span class="taxi-name">MyTransport</span> — Loupiac / Bordeaux Airport<br><span class="taxi-meta">+33 (0)6 50 21 13 16 · mytransport33@outlook.fr · English on request</span></div>
+  `},
   // ---- Dordogne ----
   {region:'dordogne', category:'Lodging', title:'Lodging: Le Chèvrefeuille', url:'https://lechevrefeuille.com/', notes:'2099 Route des deux hameaux, Pechboutier, St Cyprien · Hotel direct', map:'44.9012,1.0415'},
   {region:'dordogne', category:'Château / Sight', title:'Font-de-Gaume, Combarelles & Cap-Blanc — guided tour', url:'https://www.sites-les-eyzies.fr/en/adult-groups-and-tourism-professionals/social-and-economic-committees-and-inter-cses/guided-tour-of-the-font-de-gaume-and-combarelles-caves-and-the-cap-blanc-shelter', notes:'Prehistoric cave art, Vézère Valley.'},
@@ -293,6 +314,16 @@ function render(){
       section.appendChild(empty);
     } else {
       regionLinks.forEach(l=>{
+        if(l.block){
+          const details=document.createElement('details'); details.className='block-card';
+          const summary=document.createElement('summary'); summary.textContent=l.title;
+          details.appendChild(summary);
+          const body=document.createElement('div'); body.className='block-body';
+          body.innerHTML=l.block;
+          details.appendChild(body);
+          section.appendChild(details);
+          return;
+        }
         const card=document.createElement('div'); card.className='link-card';
         const notesHtml=l.notes?`<div class="notes">${escapeHtml(l.notes)}</div>`:'';
         const mapHtml=l.map?`<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(l.map)}" target="_blank" rel="noopener">📍 Map</a>`:'';
