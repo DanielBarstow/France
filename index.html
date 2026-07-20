@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dan &amp; Eva — France, Five Ways</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#20261F; --parchment:#F2EEE3; --parchment-2:#E9E2D1;
+    --wine:#7A2E2E; --limestone:#8B7355; --ocean:#2C5F6F;
+    --terracotta:#B5602E; --line:#D8D0BC;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--parchment);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.display{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-0.01em;}
+  .wrap{max-width:900px;margin:0 auto;padding:28px 20px 80px;}
+  header{margin-bottom:28px;}
+  .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:0.14em;color:var(--wine);font-weight:700;margin-bottom:6px;}
+  h1{font-size:34px;margin:0 0 6px;line-height:1.05;}
+  .subtitle{color:#5b5749;font-size:15px;margin:0;}
+
+  .route{display:flex;margin:26px 0 30px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff;}
+  .route-stop{flex:1;padding:14px 8px;text-align:center;cursor:pointer;border-right:1px solid var(--line);position:relative;transition:background 0.15s;}
+  .route-stop:last-child{border-right:none;}
+  .route-stop:hover{background:var(--parchment-2);}
+  .route-stop .n{font-family:'Fraunces',serif;font-size:20px;display:block;}
+  .route-stop .label{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#6b6656;margin-top:2px;display:block;}
+  .route-stop.active{background:var(--parchment-2);}
+  .route-stop .bar{position:absolute;bottom:0;left:0;right:0;height:3px;}
+
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+  input[type=text], input[type=password], select{font-family:'Inter',sans-serif;border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 12px;font-size:14px;color:var(--ink);}
+  #search{flex:1;min-width:140px;}
+
+  .region-section{margin-bottom:34px;scroll-margin-top:20px;}
+  .region-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;border-bottom:2px solid var(--rc,var(--ink));padding-bottom:8px;}
+  .region-head h2{font-size:22px;margin:0;color:var(--rc,var(--ink));}
+  .region-count{font-size:13px;color:#8a8570;}
+  .cat-group{margin-bottom:16px;}
+  .cat-label{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#8a8570;font-weight:700;margin:0 0 8px;}
+  .link-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:8px;}
+  .link-main a{font-weight:600;color:var(--ink);text-decoration:none;font-size:15px;}
+  .link-main a:hover{text-decoration:underline;}
+  .link-main .link-title{font-weight:600;color:var(--ink);font-size:15px;}
+  .link-main .notes{font-size:13px;color:#6b6656;margin-top:3px;}
+  .map-link{display:inline-block;margin-top:6px;font-size:12px;font-weight:600;color:var(--ocean);text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:2px 8px;}
+  .map-link:hover{background:var(--parchment-2);}
+  .day-strip{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 12px;margin-bottom:18px;-webkit-overflow-scrolling:touch;}
+  .day-box{flex:0 0 120px;min-height:88px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 10px;display:flex;flex-direction:column;}
+  .day-box.has-note{border-color:var(--rc,var(--ink));}
+  .day-date{font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#8a8570;font-weight:700;margin-bottom:5px;}
+  .day-note{font-size:13px;color:var(--ink);line-height:1.35;}
+  .empty{color:#8a8570;font-size:14px;font-style:italic;padding:8px 0 4px;}
+
+  /* Gate */
+  #gate{position:fixed;inset:0;background:var(--parchment);display:flex;align-items:center;justify-content:center;z-index:100;}
+  .gate-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:34px 30px;max-width:360px;width:90%;text-align:center;}
+  .gate-card .eyebrow{margin-bottom:10px;}
+  .gate-card h2{margin:0 0 6px;font-size:26px;}
+  .gate-card p{font-size:14px;color:#6b6656;margin:0 0 18px;}
+  .gate-card input{width:100%;text-align:center;font-size:15px;margin-bottom:12px;}
+  .gate-card .enter-btn{width:100%;background:var(--wine);color:#fff;border:none;border-radius:8px;padding:11px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+  .gate-err{color:var(--wine);font-size:13px;min-height:18px;margin-top:8px;}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="app">
+  <header>
+    <div class="eyebrow">Dan &amp; Eva · One month, five regions</div>
+    <h1>France, Five Ways</h1>
+    <p class="subtitle">Every link we've found, sorted by where we'll be.</p>
+  </header>
+
+  <div class="route" id="routeStrip"></div>
+
+  <div class="toolbar">
+    <input type="text" id="search" placeholder="Search titles or notes…">
+  </div>
+
+  <div id="content"></div>
+</div>
+
+<script>
+const REGIONS = [
+  {id:'france', name:'France', color:'#3A3A6E'},
+  {id:'travel', name:'Travel', color:'#6E5A3A'},
+  {id:'bordeaux', name:'Bordeaux', color:'#7A2E2E'},
+  {id:'limoges', name:'Limoges', color:'#4A6C4E'},
+  {id:'dordogne', name:'Dordogne', color:'#8B7355'},
+  {id:'carcassonne', name:'Carcassonne', color:'#B5602E'},
+  {id:'nice', name:'Riviera', color:'#2C5F6F'},
+];
+const CATS = ['Restaurant','Château / Sight','Activity','Lodging','Guide / Reading','Other'];
+
+/* ============================================================
+   All the links live right here. To add one, copy a line and
+   fill it in — or just tell Claude "add X to Dordogne".
+   region: bordeaux | dordogne | limoges | carcassonne | nice
+   category: Restaurant | Château / Sight | Activity | Lodging | Guide / Reading | Other
+   ============================================================ */
+const LINKS = [
+  // ---- France (whole-trip) ----
+  {region:'france', category:'Guide / Reading', title:'Rick Steves — France travel guide', url:'https://www.ricksteves.com/europe/france', notes:'General France planning.'},
+  // ---- Travel ----
+  {region:'travel', category:'Other', title:'Fly Boston to Bordeaux', url:'https://www.delta.com/my-trips/search?mkcpgn=EM_TRNX_EN_BE_RZ_247382_260526_P0_BTN&refreshURL=null&staticurl=t', notes:'Delta/AF 224 Boston–Paris + 8391 Paris–Bordeaux'},
+  {region:'travel', category:'Other', title:'Fly Nice to Boston', url:'https://www.delta.com/my-trips/search?mkcpgn=EM_TRNX_EN_BE_RZ_247382_260526_P0_BTN&refreshURL=null&staticurl=t', notes:'Delta/AF 277'},
+  {region:'travel', category:'Other', title:'Car Rental — Sixt', url:'https://www.sixt.com/account/#/booking/1088564730', notes:''},
+  {region:'travel', category:'Other', title:'Passion Monuments membership (Centre des monuments nationaux)', url:'https://www.monuments-nationaux.fr/en/passion-monuments-membership', notes:'Pass covering many national sites.'},
+  // ---- Bordeaux ----
+  {region:'bordeaux', category:'Lodging', title:'Lodging: Le Gîte du Château Bozelle', url:'https://www.booking.com/hotel/fr/le-gite-du-chateau-bozelle.html', notes:'Arveyres · Booking.com', map:'44.898011,-0.250233'},
+  {region:'bordeaux', category:'Guide / Reading', title:'Map — Lost in Bordeaux', url:'https://www.google.com/maps/d/u/0/viewer?mid=1HBfzUosnbkc8x4Ky9fjD6vYpsQdFOOU&ll=44.840660574160275%2C-0.5746389623736947&z=17', notes:'Interactive map.'},
+  {region:'bordeaux', category:'Guide / Reading', title:'Lost in Bordeaux', url:'https://www.lostinbordeaux.com/', notes:'Local blog — food, wine, day trips.'},
+  {region:'bordeaux', category:'Château / Sight', title:'Bordeaux tourisme', url:'https://www.bordeaux-tourism.co.uk', notes:'Official tourism site'},
+  {region:'bordeaux', category:'Château / Sight', title:'Saint-Émilion', url:'https://www.lostinbordeaux.com/saint-emilion-by-train-an-easy-day-trip-from-bordeaux/', notes:'from Lost in Bordeaux'},
+  {region:'bordeaux', category:'Château / Sight', title:'Saint-Émilion tourisme', url:'https://www.saint-emilion-tourisme.com/en/', notes:'Official tourism site'},
+  {region:'bordeaux', category:'Guide / Reading', title:'Libourne tourisme', url:'https://www.grandlibournais-tourisme.com/en/', notes:'Official tourism site'},
+  {region:'bordeaux', category:'Restaurant', title:'Restaurant: La Table de Catusseau', url:'https://www.latabledecatusseau.fr/en/', notes:'Pomerol'},
+  {region:'bordeaux', category:'Restaurant', title:'Restaurant: La Table de Pavie', url:'https://hoteldepavie.com/en/la-table-de-pavie.html', notes:'Saint-Émilion'},
+  {region:'bordeaux', category:'Restaurant', title:'Restaurant: Lard et Bouchon', url:'https://www.lardetbouchon.fr/le-restaurant/', notes:'Saint-Émilion'},
+  {region:'bordeaux', category:'Activity', title:'Wine: Cité du Vin', url:'https://www.laciteduvin.com/en', notes:'Bordeaux'},
+  {region:'bordeaux', category:'Guide / Reading', title:'Rick Steves forum — Bordeaux', url:'https://community.ricksteves.com/travel-forum/france/bordeaux-26f87354-3b50-41e7-9349-a8d7f19eb845', notes:''},
+  {region:'bordeaux', category:'Guide / Reading', title:'Reddit — Bordeaux travel search', url:'https://www.reddit.com/search/?q=bordeaux+travel', notes:''},
+  // ---- Dordogne ----
+  {region:'dordogne', category:'Lodging', title:'Lodging: Le Chèvrefeuille', url:'https://lechevrefeuille.com/', notes:'2099 Route des deux hameaux, Pechboutier, St Cyprien · Hotel direct', map:'44.9012,1.0415'},
+  {region:'dordogne', category:'Château / Sight', title:'Font-de-Gaume, Combarelles & Cap-Blanc — guided tour', url:'https://www.sites-les-eyzies.fr/en/adult-groups-and-tourism-professionals/social-and-economic-committees-and-inter-cses/guided-tour-of-the-font-de-gaume-and-combarelles-caves-and-the-cap-blanc-shelter', notes:'Prehistoric cave art, Vézère Valley.'},
+  {region:'dordogne', category:'Château / Sight', title:'Font-de-Gaume — Sites of the Vézère Valley (practical info)', url:'https://www.sites-les-eyzies.fr/en/visit/practical-information#access-conditions-to-the-sites', notes:'Access conditions & how to visit.'},
+  {region:'dordogne', category:'Château / Sight', title:'Font-de-Gaume tickets tips (Le Chèvrefeuille)', url:'https://lechevrefeuille.com/font-de-gaume-tickets-2/', notes:'How to get the scarce tickets.'},
+  {region:'dordogne', category:'Château / Sight', title:'Troglodyte sites of Dordogne (Lascaux-Périgord)', url:'https://www.lascaux-dordogne.com/en/a-voir-a-faire/decouvrir/sites-troglodytiques/', notes:'Cliff-dwelling sites.'},
+  {region:'dordogne', category:'Guide / Reading', title:'Lost in Bordeaux — Dordogne archives', url:'https://www.lostinbordeaux.com/category/discover-the-southwest-of-france/dordogne/', notes:''},
+  {region:'dordogne', category:'Guide / Reading', title:'Rick Steves forum — Four Weeks in France (trip report)', url:'https://community.ricksteves.com/travel-forum/trip-reports/just-returned-from-four-weeks-in-france-continued', notes:'Mentions the caves.'},
+  // ---- Limoges ----
+  {region:'limoges', category:'Lodging', title:'Lodging: La Maison Blanche', url:'https://www.booking.com/hotel/fr/la-maison-blanche-limoges.html', notes:'31 Avenue Saint-Surin, 87000 Limoges · Booking.com', map:'45.834091,1.249662'},
+  {region:'limoges', category:'Activity', title:'Bernardaud — official site', url:'https://www.bernardaud.com/en/us', notes:'Limoges porcelain since 1863.'},
+  {region:'limoges', category:'Activity', title:'Bernardaud Porcelain Factory — Tripadvisor', url:'https://www.tripadvisor.com/Attraction_Review-g187159-d2292752-Reviews-Bernardaud_Porcelain_Factory-Limoges_Haute_Vienne_Nouvelle_Aquitaine.html', notes:'Factory visit reviews.'},
+  {region:'limoges', category:'Activity', title:'Bernardaud Porcelain Factory — tickets (Trip.com)', url:'https://us.trip.com/travel-guide/attraction/limoges/bernardaud-porcelain-factory-18693081', notes:'Hours, prices, booking.'},
+  // ---- Carcassonne / Languedoc ----
+  {region:'carcassonne', category:'Lodging', title:'Lodging: Hôtel du Château', url:'https://www.hotelscharmedesign.com/en/hotel-du-chateau/home-carcasonne/', notes:'2 Rue Camille Saint-Saëns, 11000 Carcassonne · Booking TBD', map:'43.207651,2.367432'},
+  {region:'carcassonne', category:'Château / Sight', title:'Boutique du Patrimoine', url:'https://www.boutiquedupatrimoine.fr/en/', notes:'Heritage / monuments shop.'},
+  {region:'carcassonne', category:'Château / Sight', title:'Béziers — The Good Life France', url:'https://thegoodlifefrance.com/spotlight-on-beziers/', notes:'What to see in Béziers.'},
+  {region:'carcassonne', category:'Château / Sight', title:'Collioure & Perpignan — The Good Life France', url:'https://thegoodlifefrance.com/what-to-see-and-do-in-collioure-and-perpignan/', notes:'Coastal day-trip ideas.'},
+  {region:'carcassonne', category:'Activity', title:'Real South of France Tours (Languedoc)', url:'https://www.realsouthoffrancetours.fr/', notes:'Small-group Occitanie tours.'},
+  {region:'carcassonne', category:'Guide / Reading', title:'Languedoc-Roussillon — Tripadvisor overview', url:'https://www.tripadvisor.com/Tourism-g187149-Languedoc_Roussillon_Occitanie-Vacations.html', notes:''},
+  {region:'carcassonne', category:'Guide / Reading', title:'Facebook — Travel in the Southwest of France', url:'https://www.facebook.com/groups/southwestfrance', notes:'Community group (login needed).'},
+  {region:'carcassonne', category:'Guide / Reading', title:'Facebook — South West & Rest of France', url:'https://www.facebook.com/groups/2472916959623829/', notes:'Community group (login needed).'},
+  // ---- Nice / Riviera ----
+  {region:'nice', category:'Lodging', title:'Lodging: Fort de la Tourterelle', url:'https://www.airbnb.com/trips/v1/1676224967868456802', notes:'265 Corniche des Issambres, 83380 Les Issambres · Airbnb', map:'43.350943,6.715095'},
+  {region:'nice', category:'Activity', title:'Massacan Rifugio — bike store, Nice (The Radavist)', url:'https://theradavist.com/massacan-rifugio-nice', notes:'Cycling in the hills above Nice.'},
+  {region:'nice', category:'Activity', title:"Nice June 2026 — Côte d'Azur (YouTube short)", url:'https://www.youtube.com/shorts/Hbppp94ybZ4', notes:'Atmosphere / inspiration.'},
+  {region:'nice', category:'Activity', title:'Mediterranean Season 2026 — 200+ events (Institut français)', url:'https://www.institutfrancais.com/en/magazine/a-la-une/season-mediterranee-2026-plus-200-events-france', notes:''},
+  {region:'nice', category:'Activity', title:'Mediterranean Season 2026 — programme (Institut français)', url:'https://www.institutfrancais.com/en/programme/project-support/mediterranean-season-2026', notes:''},
+];
+
+let activeRegionFilter = null;
+let searchTerm = '';
+
+/* ============================================================
+   Day strips. For each location, set the stay's start/end dates
+   (YYYY-MM-DD) and optional per-day notes keyed by date.
+   To add a note: put it under notes, e.g. '2026-09-03':'Wine tour'.
+   Locations with no entry here simply show no day strip.
+   ============================================================ */
+const STAYS = {
+  travel: {
+    days: [
+      {iso:'2026-08-31', note:'19:10 Boston depart'},
+      {iso:'2026-09-01', note:'8:10 Paris arrive\n12:15 Paris depart\n13:15 Bordeaux arrive'},
+      {iso:'2026-10-02', note:'11:45 Nice depart\n14:32 Boston arrive'},
+    ]
+  },
+  bordeaux: {
+    start: '2026-09-01',
+    end:   '2026-09-10',
+    notes: {
+      '2026-09-01': '13:15 flight lands',
+      '2026-09-06': 'Bordeaux Market',
+      '2026-09-10': 'Drive to Limoges',
+    }
+  },
+  limoges: {
+    start: '2026-09-10',
+    end:   '2026-09-11',
+    notes: {
+      '2026-09-10': 'Drive to Limoges',
+      '2026-09-11': 'Drive to Dordogne',
+    }
+  },
+  dordogne: {
+    start: '2026-09-11',
+    end:   '2026-09-21',
+    notes: {
+      '2026-09-11': 'Drive to Dordogne',
+      '2026-09-13': 'Cooking class',
+      '2026-09-21': 'Drive to Carcassonne',
+    }
+  },
+  carcassonne: {
+    start: '2026-09-21',
+    end:   '2026-09-24',
+    notes: {
+      '2026-09-21': 'Drive to Carcassonne',
+      '2026-09-24': 'Drive to Riviera',
+    }
+  },
+  nice: {
+    start: '2026-09-24',
+    end:   '2026-10-02',
+    notes: {
+      '2026-09-24': 'Drive to Riviera',
+      '2026-10-02': 'Flight departs 11:45',
+    }
+  },
+};
+
+function fmtDay(d){
+  return d.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'});
+}
+function buildDays(start, end){
+  const days=[]; const s=new Date(start+'T00:00:00'); const e=new Date(end+'T00:00:00');
+  for(let d=new Date(s); d<=e; d.setDate(d.getDate()+1)){
+    const iso=d.toISOString().slice(0,10);
+    days.push({iso, label:fmtDay(new Date(d))});
+  }
+  return days;
+}
+
+function escapeHtml(s){return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function escapeAttr(s){let url=(s||'').trim();if(url && !/^https?:\/\//i.test(url))url='https://'+url;return escapeHtml(url);}
+
+/* Password gate removed — site loads directly */
+
+/* Rendering */
+function renderRouteStrip(){
+  const strip=document.getElementById('routeStrip'); strip.innerHTML='';
+  REGIONS.forEach((r,i)=>{
+    const div=document.createElement('div');
+    div.className='route-stop'+(activeRegionFilter===r.id?' active':'');
+    div.innerHTML=`<span class="n">${i+1}</span><span class="label">${r.name}</span><span class="bar" style="background:${r.color}"></span>`;
+    div.onclick=()=>{
+      activeRegionFilter=(activeRegionFilter===r.id)?null:r.id;
+      render();
+      const el=document.getElementById('region-'+r.id);
+      if(el && activeRegionFilter) el.scrollIntoView({behavior:'smooth',block:'start'});
+    };
+    strip.appendChild(div);
+  });
+}
+function render(){
+  renderRouteStrip();
+  const content=document.getElementById('content'); content.innerHTML='';
+  const term=searchTerm.trim().toLowerCase();
+  const regionsToShow=activeRegionFilter?REGIONS.filter(r=>r.id===activeRegionFilter):REGIONS;
+  regionsToShow.forEach(region=>{
+    let regionLinks=LINKS.filter(l=>l.region===region.id);
+    if(term) regionLinks=regionLinks.filter(l=>(l.title||'').toLowerCase().includes(term)||(l.notes||'').toLowerCase().includes(term));
+    const section=document.createElement('div');
+    section.className='region-section'; section.id='region-'+region.id;
+    section.style.setProperty('--rc',region.color);
+    const head=document.createElement('div'); head.className='region-head';
+    const stayForHead=STAYS[region.id];
+    let headMeta=`${regionLinks.length} saved`;
+    if(stayForHead && stayForHead.start){
+      const dayCount=buildDays(stayForHead.start, stayForHead.end).length;
+      headMeta=`${dayCount} day${dayCount===1?'':'s'}`;
+    }
+    head.innerHTML=`<h2>${region.name}</h2><span class="region-count">${headMeta}</span>`;
+    section.appendChild(head);
+
+    // Day strip (if this location has a defined stay)
+    const stay=STAYS[region.id];
+    if(stay && !term){
+      let days;
+      if(stay.days){
+        days=stay.days.map(d=>({iso:d.iso, label:fmtDay(new Date(d.iso+'T00:00:00')), note:d.note||''}));
+      } else {
+        days=buildDays(stay.start, stay.end).map(d=>({...d, note:(stay.notes && stay.notes[d.iso])||''}));
+      }
+      const strip=document.createElement('div'); strip.className='day-strip';
+      days.forEach(day=>{
+        const note=day.note;
+        const box=document.createElement('div');
+        box.className='day-box'+(note?' has-note':'');
+        box.innerHTML=`<div class="day-date">${day.label}</div>${note?`<div class="day-note">${escapeHtml(note).replace(/\n/g,'<br>')}</div>`:''}`;
+        strip.appendChild(box);
+      });
+      section.appendChild(strip);
+    }
+    if(regionLinks.length===0){
+      const empty=document.createElement('div'); empty.className='empty';
+      empty.textContent=term?'Nothing matches here yet.':'No links yet.';
+      section.appendChild(empty);
+    } else {
+      regionLinks.forEach(l=>{
+        const card=document.createElement('div'); card.className='link-card';
+        const notesHtml=l.notes?`<div class="notes">${escapeHtml(l.notes)}</div>`:'';
+        const mapHtml=l.map?`<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(l.map)}" target="_blank" rel="noopener">📍 Map</a>`:'';
+        const titleHtml=l.url
+          ? `<a href="${escapeAttr(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.title||l.url)}</a>`
+          : `<span class="link-title">${escapeHtml(l.title)}</span>`;
+        card.innerHTML=`<div class="link-main">${titleHtml}${notesHtml}${mapHtml}</div>`;
+        section.appendChild(card);
+      });
+    }
+    content.appendChild(section);
+  });
+}
+
+document.getElementById('search').addEventListener('input',e=>{searchTerm=e.target.value;render();});
+
+function init(){ render(); }
+init();
+</script>
+</body>
+</html>
