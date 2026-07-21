@@ -328,7 +328,7 @@ function render(){
         const notesHtml=l.notes?`<div class="notes">${escapeHtml(l.notes)}</div>`:'';
         const mapHtml=l.map?`<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(l.map)}" target="_blank" rel="noopener">📍 Map</a>`:'';
         const titleHtml=l.url
-          ? `<a href="${escapeAttr(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.title||l.url)}</a>`
+          ? `<a href="${escapeAttr(l.url)}">${escapeHtml(l.title||l.url)}</a>`
           : `<span class="link-title">${escapeHtml(l.title)}</span>`;
         card.innerHTML=`<div class="link-main">${titleHtml}${notesHtml}${mapHtml}</div>`;
         section.appendChild(card);
