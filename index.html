@@ -40,6 +40,8 @@
   .region-count{font-size:13px;color:#8a8570;}
   .cat-group{margin-bottom:16px;}
   .cat-label{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#8a8570;font-weight:700;margin:0 0 8px;}
+  .sec-label{font-size:12px;text-transform:uppercase;letter-spacing:0.09em;color:var(--rc,#8a8570);font-weight:700;margin:18px 0 9px;opacity:0.85;}
+  .sec-label:first-of-type{margin-top:4px;}
   .link-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:8px;}
   .link-main a{font-weight:600;color:var(--ink);text-decoration:none;font-size:15px;}
   .link-main a:hover{text-decoration:underline;}
@@ -127,22 +129,8 @@ const LINKS = [
   {region:'safety', category:'Other', title:'NASA Worldview — burn scars / imagery', url:'https://worldview.earthdata.nasa.gov/', notes:'Satellite view of burned areas (pick a date)'},
   {region:'travel', category:'Other', title:'Passion Monuments membership (Centre des monuments nationaux)', url:'https://www.monuments-nationaux.fr/en/passion-monuments-membership', notes:'Pass covering many national sites.'},
   // ---- Bordeaux ----
-  {region:'bordeaux', category:'Lodging', title:'Lodging: Le Gîte du Château Bozelle', url:'https://www.booking.com/hotel/fr/le-gite-du-chateau-bozelle.html', notes:'Arveyres · Booking.com', map:'44.898011,-0.250233'},
-  {region:'bordeaux', category:'Guide / Reading', title:'Map — Lost in Bordeaux', url:'https://www.google.com/maps/d/u/0/viewer?mid=1HBfzUosnbkc8x4Ky9fjD6vYpsQdFOOU&ll=44.840660574160275%2C-0.5746389623736947&z=17', notes:'Interactive map.'},
-  {region:'bordeaux', category:'Guide / Reading', title:'Lost in Bordeaux', url:'https://www.lostinbordeaux.com/', notes:'Local blog — food, wine, day trips.'},
-  {region:'bordeaux', category:'Château / Sight', title:'Bordeaux tourisme', url:'https://www.bordeaux-tourism.co.uk', notes:'Official tourism site'},
-  {region:'bordeaux', category:'Château / Sight', title:'Saint-Émilion', url:'https://www.lostinbordeaux.com/saint-emilion-by-train-an-easy-day-trip-from-bordeaux/', notes:'from Lost in Bordeaux'},
-  {region:'bordeaux', category:'Château / Sight', title:'Saint-Émilion tourisme', url:'https://www.saint-emilion-tourisme.com/en/', notes:'Official tourism site'},
-  {region:'bordeaux', category:'Guide / Reading', title:'Libourne tourisme', url:'https://www.grandlibournais-tourisme.com/en/', notes:'Official tourism site'},
-  {region:'bordeaux', category:'Restaurant', title:'Restaurant: La Table de Catusseau', url:'https://www.latabledecatusseau.fr/en/', notes:'Pomerol'},
-  {region:'bordeaux', category:'Restaurant', title:'Restaurant: La Table de Pavie', url:'https://hoteldepavie.com/en/la-table-de-pavie.html', notes:'Saint-Émilion'},
-  {region:'bordeaux', category:'Restaurant', title:'Restaurant: Lard et Bouchon', url:'https://www.lardetbouchon.fr/le-restaurant/', notes:'Saint-Émilion'},
-  {region:'bordeaux', category:'Activity', title:'Wine: Cité du Vin', url:'https://www.laciteduvin.com/en', notes:'Bordeaux'},
-  {region:'bordeaux', category:'Guide / Reading', title:'Rick Steves forum — Bordeaux', url:'https://community.ricksteves.com/travel-forum/france/bordeaux-26f87354-3b50-41e7-9349-a8d7f19eb845', notes:''},
-  {region:'bordeaux', category:'Château / Sight', title:'Lacanau-Océan', url:'https://www.tripadvisor.com/Attractions-g196510-Activities-Lacanau_Ocean_Lacanau_Gironde_Nouvelle_Aquitaine.html', notes:'Atlantic beach town'},
-  {region:'bordeaux', category:'Guide / Reading', title:'Reddit — Bordeaux (French)', url:'https://www.reddit.com/r/bordeaux/', notes:'Local subreddit'},
-  {region:'bordeaux', category:'Guide / Reading', title:'Reddit — Bordeaux travel (English)', url:'https://www.reddit.com/search/?q=bordeaux+travel', notes:''},
-  {region:'bordeaux', category:'Other', title:'Taxis (English spoken)', block:`
+  {region:'bordeaux', sec:'logistics', category:'Lodging', title:'Lodging: Le Gîte du Château Bozelle', url:'https://www.booking.com/hotel/fr/le-gite-du-chateau-bozelle.html', notes:'Arveyres · Booking.com', map:'44.898011,-0.250233'},
+  {region:'bordeaux', sec:'logistics', category:'Other', title:'Taxis (English spoken)', block:`
     <div class="taxi"><span class="taxi-name">ECM (n°2)</span> — Libourne<br><span class="taxi-meta">+33 (0)6 09 33 37 77 · taxiecm@aol.fr · English &amp; español</span></div>
     <div class="taxi"><span class="taxi-name">Taxi n°9</span> — Libourne<br><span class="taxi-meta">+33 (0)6 59 85 48 40 · taxilouis33@gmail.com · English &amp; español</span></div>
     <div class="taxi"><span class="taxi-name">Mon Taxi Libourne (n°10)</span> — Libourne<br><span class="taxi-meta">+33 (0)6 45 27 83 21 · English &amp; español</span></div>
@@ -154,36 +142,52 @@ const LINKS = [
     <div class="taxi"><span class="taxi-name">Taxi Richard</span> — Sainte-Terre<br><span class="taxi-meta">+33 (0)6 60 71 77 37 · ruffetrichard@hotmail.fr</span></div>
     <div class="taxi"><span class="taxi-name">MyTransport</span> — Loupiac / Bordeaux Airport<br><span class="taxi-meta">+33 (0)6 50 21 13 16 · mytransport33@outlook.fr · English on request</span></div>
   `},
+  {region:'bordeaux', sec:'best-guide', category:'Guide / Reading', title:'Lost in Bordeaux', url:'https://www.lostinbordeaux.com/', notes:'Local blog — food, wine, day trips.'},
+  {region:'bordeaux', sec:'guide', category:'Guide / Reading', title:'Map — Lost in Bordeaux', url:'https://www.google.com/maps/d/u/0/viewer?mid=1HBfzUosnbkc8x4Ky9fjD6vYpsQdFOOU&ll=44.840660574160275%2C-0.5746389623736947&z=17', notes:'Interactive map.'},
+  {region:'bordeaux', sec:'guide', category:'Château / Sight', title:'Bordeaux tourisme', url:'https://www.bordeaux-tourism.co.uk', notes:'Official tourism site'},
+  {region:'bordeaux', sec:'guide', category:'Château / Sight', title:'Saint-Émilion tourisme', url:'https://www.saint-emilion-tourisme.com/en/', notes:'Official tourism site'},
+  {region:'bordeaux', sec:'guide', category:'Guide / Reading', title:'Libourne tourisme', url:'https://www.grandlibournais-tourisme.com/en/', notes:'Official tourism site'},
+  {region:'bordeaux', sec:'guide', category:'Guide / Reading', title:'Rick Steves forum — Bordeaux', url:'https://community.ricksteves.com/travel-forum/france/bordeaux-26f87354-3b50-41e7-9349-a8d7f19eb845', notes:''},
+  {region:'bordeaux', sec:'guide', category:'Guide / Reading', title:'Reddit — Bordeaux (French)', url:'https://www.reddit.com/r/bordeaux/', notes:'Local subreddit'},
+  {region:'bordeaux', sec:'guide', category:'Guide / Reading', title:'Reddit — Bordeaux travel (English)', url:'https://www.reddit.com/search/?q=bordeaux+travel', notes:''},
+  {region:'bordeaux', sec:'restaurant', category:'Restaurant', title:'Restaurant: La Table de Catusseau', url:'https://www.latabledecatusseau.fr/en/', notes:'Pomerol'},
+  {region:'bordeaux', sec:'restaurant', category:'Restaurant', title:'Restaurant: La Table de Pavie', url:'https://hoteldepavie.com/en/la-table-de-pavie.html', notes:'Saint-Émilion'},
+  {region:'bordeaux', sec:'restaurant', category:'Restaurant', title:'Restaurant: Lard et Bouchon', url:'https://www.lardetbouchon.fr/le-restaurant/', notes:'Saint-Émilion'},
+  {region:'bordeaux', sec:'chateau', category:'Château / Sight', title:'Saint-Émilion', url:'https://www.lostinbordeaux.com/saint-emilion-by-train-an-easy-day-trip-from-bordeaux/', notes:'from Lost in Bordeaux'},
+  {region:'bordeaux', sec:'chateau', category:'Château / Sight', title:'Lacanau-Océan', url:'https://www.tripadvisor.com/Attractions-g196510-Activities-Lacanau_Ocean_Lacanau_Gironde_Nouvelle_Aquitaine.html', notes:'Atlantic beach town'},
+  {region:'bordeaux', sec:'chateau', category:'Activity', title:'Wine: Cité du Vin', url:'https://www.laciteduvin.com/en', notes:'Bordeaux'},
   // ---- Dordogne ----
-  {region:'dordogne', category:'Lodging', title:'Lodging: Le Chèvrefeuille', url:'https://lechevrefeuille.com/', notes:'2099 Route des deux hameaux, Pechboutier, St Cyprien · Hotel direct', map:'44.9012,1.0415'},
-  {region:'dordogne', category:'Château / Sight', title:'Font-de-Gaume, Combarelles & Cap-Blanc — guided tour', url:'https://www.sites-les-eyzies.fr/en/adult-groups-and-tourism-professionals/social-and-economic-committees-and-inter-cses/guided-tour-of-the-font-de-gaume-and-combarelles-caves-and-the-cap-blanc-shelter', notes:'Prehistoric cave art, Vézère Valley.'},
-  {region:'dordogne', category:'Château / Sight', title:'Font-de-Gaume — Sites of the Vézère Valley (practical info)', url:'https://www.sites-les-eyzies.fr/en/visit/practical-information#access-conditions-to-the-sites', notes:'Access conditions & how to visit.'},
-  {region:'dordogne', category:'Château / Sight', title:'Font-de-Gaume tickets tips (Le Chèvrefeuille)', url:'https://lechevrefeuille.com/font-de-gaume-tickets-2/', notes:'How to get the scarce tickets.'},
-  {region:'dordogne', category:'Château / Sight', title:'Font-de-Gaume tickets — English', url:'https://tickets.monuments-nationaux.fr/en-GB/home', notes:'Official booking'},
-  {region:'dordogne', category:'Château / Sight', title:'Font-de-Gaume tickets — French', url:'https://tickets.monuments-nationaux.fr/fr-FR/accueil', notes:'Réservation officielle'},
-  {region:'dordogne', category:'Château / Sight', title:'Troglodyte sites of Dordogne (Lascaux-Périgord)', url:'https://www.lascaux-dordogne.com/en/a-voir-a-faire/decouvrir/sites-troglodytiques/', notes:'Cliff-dwelling sites.'},
-  {region:'dordogne', category:'Guide / Reading', title:'Lost in Bordeaux — Dordogne', url:'https://www.lostinbordeaux.com/category/discover-the-southwest-of-france/dordogne/', notes:''},
-  {region:'dordogne', category:'Guide / Reading', title:'Rick Steves forum — Four Weeks in France (trip report)', url:'https://community.ricksteves.com/travel-forum/trip-reports/just-returned-from-four-weeks-in-france-continued', notes:'Mentions the caves.'},
+  {region:'dordogne', sec:'logistics', category:'Lodging', title:'Lodging: Le Chèvrefeuille', url:'https://lechevrefeuille.com/', notes:'2099 Route des deux hameaux, Pechboutier, St Cyprien · Hotel direct', map:'44.901485,1.043773'},
+  {region:'dordogne', sec:'best-guide', category:'Guide / Reading', title:'Best guide: Le Chèvrefeuille', url:'https://lechevrefeuille.com/useful-info/', notes:''},
+  {region:'dordogne', sec:'best-guide', category:'Guide / Reading', title:"Sara's Recommended Days Out (PDF)", url:'chevrefeuille-guide.pdf', newtab:true, notes:'Le Chèvrefeuille guest guide'},
+  {region:'dordogne', sec:'chateau', group:'Font-de-Gaume & caves', category:'Château / Sight', title:'Font-de-Gaume, Combarelles & Cap-Blanc — guided tour', url:'https://www.sites-les-eyzies.fr/en/adult-groups-and-tourism-professionals/social-and-economic-committees-and-inter-cses/guided-tour-of-the-font-de-gaume-and-combarelles-caves-and-the-cap-blanc-shelter', notes:'Prehistoric cave art, Vézère Valley.'},
+  {region:'dordogne', sec:'chateau', group:'Font-de-Gaume & caves', category:'Château / Sight', title:'Font-de-Gaume — Sites of the Vézère Valley (practical info)', url:'https://www.sites-les-eyzies.fr/en/visit/practical-information#access-conditions-to-the-sites', notes:'Access conditions & how to visit.'},
+  {region:'dordogne', sec:'chateau', group:'Font-de-Gaume & caves', category:'Château / Sight', title:'Font-de-Gaume tickets tips (Le Chèvrefeuille)', url:'https://lechevrefeuille.com/font-de-gaume-tickets-2/', notes:'How to get the scarce tickets.'},
+  {region:'dordogne', sec:'chateau', group:'Font-de-Gaume & caves', category:'Château / Sight', title:'Font-de-Gaume tickets — English', url:'https://tickets.monuments-nationaux.fr/en-GB/home', notes:'Official booking'},
+  {region:'dordogne', sec:'chateau', group:'Font-de-Gaume & caves', category:'Château / Sight', title:'Font-de-Gaume tickets — French', url:'https://tickets.monuments-nationaux.fr/fr-FR/accueil', notes:'Réservation officielle'},
+  {region:'dordogne', sec:'chateau', category:'Château / Sight', title:'Troglodyte sites of Dordogne (Lascaux-Périgord)', url:'https://www.lascaux-dordogne.com/en/a-voir-a-faire/decouvrir/sites-troglodytiques/', notes:'Cliff-dwelling sites.'},
+  {region:'dordogne', sec:'guide', category:'Guide / Reading', title:'Lost in Bordeaux — Dordogne', url:'https://www.lostinbordeaux.com/category/discover-the-southwest-of-france/dordogne/', notes:''},
+  {region:'dordogne', sec:'guide', category:'Guide / Reading', title:'Rick Steves forum — Four Weeks in France (trip report)', url:'https://community.ricksteves.com/travel-forum/trip-reports/just-returned-from-four-weeks-in-france-continued', notes:'Mentions the caves.'},
   // ---- Limoges ----
-  {region:'limoges', category:'Lodging', title:'Lodging: La Maison Blanche', url:'https://www.booking.com/hotel/fr/la-maison-blanche-limoges.html', notes:'31 Avenue Saint-Surin, 87000 Limoges · Booking.com', map:'45.834091,1.249662'},
-  {region:'limoges', category:'Activity', title:'Bernardaud — official site', url:'https://www.bernardaud.com/en/us', notes:'Limoges porcelain since 1863.'},
-  {region:'limoges', category:'Activity', title:'Bernardaud Porcelain Factory — Tripadvisor', url:'https://www.tripadvisor.com/Attraction_Review-g187159-d2292752-Reviews-Bernardaud_Porcelain_Factory-Limoges_Haute_Vienne_Nouvelle_Aquitaine.html', notes:'Factory visit reviews.'},
-  {region:'limoges', category:'Activity', title:'Bernardaud Porcelain Factory — tickets (Trip.com)', url:'https://us.trip.com/travel-guide/attraction/limoges/bernardaud-porcelain-factory-18693081', notes:'Hours, prices, booking.'},
+  {region:'limoges', sec:'logistics', category:'Lodging', title:'Lodging: La Maison Blanche', url:'https://www.booking.com/hotel/fr/la-maison-blanche-limoges.html', notes:'31 Avenue Saint-Surin, 87000 Limoges · Booking.com', map:'45.834091,1.249662'},
+  {region:'limoges', sec:'chateau', group:'Bernardaud (porcelain)', category:'Activity', title:'Bernardaud — official site', url:'https://www.bernardaud.com/en/us', notes:'Limoges porcelain since 1863.'},
+  {region:'limoges', sec:'chateau', group:'Bernardaud (porcelain)', category:'Activity', title:'Bernardaud Porcelain Factory — Tripadvisor', url:'https://www.tripadvisor.com/Attraction_Review-g187159-d2292752-Reviews-Bernardaud_Porcelain_Factory-Limoges_Haute_Vienne_Nouvelle_Aquitaine.html', notes:'Factory visit reviews.'},
+  {region:'limoges', sec:'chateau', group:'Bernardaud (porcelain)', category:'Activity', title:'Bernardaud Porcelain Factory — tickets (Trip.com)', url:'https://us.trip.com/travel-guide/attraction/limoges/bernardaud-porcelain-factory-18693081', notes:'Hours, prices, booking.'},
   // ---- Carcassonne / Languedoc ----
-  {region:'carcassonne', category:'Lodging', title:'Lodging: Hôtel du Château', url:'https://www.hotelscharmedesign.com/en/hotel-du-chateau/home-carcasonne/', notes:'2 Rue Camille Saint-Saëns, 11000 Carcassonne · Booking TBD', map:'43.207651,2.367432'},
-  {region:'carcassonne', category:'Château / Sight', title:'Boutique du Patrimoine', url:'https://www.boutiquedupatrimoine.fr/en/', notes:'Heritage / monuments shop.'},
-  {region:'carcassonne', category:'Château / Sight', title:'Béziers — The Good Life France', url:'https://thegoodlifefrance.com/spotlight-on-beziers/', notes:'What to see in Béziers.'},
-  {region:'carcassonne', category:'Château / Sight', title:'Collioure & Perpignan — The Good Life France', url:'https://thegoodlifefrance.com/what-to-see-and-do-in-collioure-and-perpignan/', notes:'Coastal day-trip ideas.'},
-  {region:'carcassonne', category:'Activity', title:'Real South of France Tours (Languedoc)', url:'https://www.realsouthoffrancetours.fr/', notes:'Small-group Occitanie tours.'},
-  {region:'carcassonne', category:'Guide / Reading', title:'Languedoc-Roussillon — Tripadvisor overview', url:'https://www.tripadvisor.com/Tourism-g187149-Languedoc_Roussillon_Occitanie-Vacations.html', notes:''},
-  {region:'carcassonne', category:'Guide / Reading', title:'Facebook — Travel in the Southwest of France', url:'https://www.facebook.com/groups/southwestfrance', notes:'Community group (login needed).'},
-  {region:'carcassonne', category:'Guide / Reading', title:'Facebook — South West & Rest of France', url:'https://www.facebook.com/groups/2472916959623829/', notes:'Community group (login needed).'},
+  {region:'carcassonne', sec:'logistics', category:'Lodging', title:'Lodging: Hôtel du Château', url:'https://www.hotelscharmedesign.com/en/hotel-du-chateau/home-carcasonne/', notes:'2 Rue Camille Saint-Saëns, 11000 Carcassonne · Booking TBD', map:'43.207651,2.367432'},
+  {region:'carcassonne', sec:'chateau', category:'Château / Sight', title:'Boutique du Patrimoine', url:'https://www.boutiquedupatrimoine.fr/en/', notes:'Heritage / monuments shop.'},
+  {region:'carcassonne', sec:'chateau', category:'Château / Sight', title:'Béziers — The Good Life France', url:'https://thegoodlifefrance.com/spotlight-on-beziers/', notes:'What to see in Béziers.'},
+  {region:'carcassonne', sec:'chateau', category:'Château / Sight', title:'Collioure & Perpignan — The Good Life France', url:'https://thegoodlifefrance.com/what-to-see-and-do-in-collioure-and-perpignan/', notes:'Coastal day-trip ideas.'},
+  {region:'carcassonne', sec:'guide', category:'Activity', title:'Real South of France Tours (Languedoc)', url:'https://www.realsouthoffrancetours.fr/', notes:'Small-group Occitanie tours.'},
+  {region:'carcassonne', sec:'guide', category:'Guide / Reading', title:'Languedoc-Roussillon — Tripadvisor overview', url:'https://www.tripadvisor.com/Tourism-g187149-Languedoc_Roussillon_Occitanie-Vacations.html', notes:''},
+  {region:'carcassonne', sec:'guide', category:'Guide / Reading', title:'Facebook — Travel in the Southwest of France', url:'https://www.facebook.com/groups/southwestfrance', notes:'Community group (login needed).'},
+  {region:'carcassonne', sec:'guide', category:'Guide / Reading', title:'Facebook — South West & Rest of France', url:'https://www.facebook.com/groups/2472916959623829/', notes:'Community group (login needed).'},
   // ---- Nice / Riviera ----
-  {region:'nice', category:'Lodging', title:'Lodging: Fort de la Tourterelle', url:'https://www.airbnb.com/trips/v1/1676224967868456802', notes:'265 Corniche des Issambres, 83380 Les Issambres · Airbnb', map:'43.350943,6.715095'},
-  {region:'nice', category:'Activity', title:'Massacan Rifugio — bike store, Nice (The Radavist)', url:'https://theradavist.com/massacan-rifugio-nice', notes:'Cycling in the hills above Nice.'},
-  {region:'nice', category:'Activity', title:"Nice June 2026 — Côte d'Azur (YouTube short)", url:'https://www.youtube.com/shorts/Hbppp94ybZ4', notes:'Atmosphere / inspiration.'},
-  {region:'nice', category:'Activity', title:'Mediterranean Season 2026 — 200+ events (Institut français)', url:'https://www.institutfrancais.com/en/magazine/a-la-une/season-mediterranee-2026-plus-200-events-france', notes:''},
-  {region:'nice', category:'Activity', title:'Mediterranean Season 2026 — programme (Institut français)', url:'https://www.institutfrancais.com/en/programme/project-support/mediterranean-season-2026', notes:''},
+  {region:'nice', sec:'logistics', category:'Lodging', title:'Lodging: Fort de la Tourterelle', url:'https://www.airbnb.com/trips/v1/1676224967868456802', notes:'265 Corniche des Issambres, 83380 Les Issambres · Airbnb', map:'43.350943,6.715095'},
+  {region:'nice', sec:'chateau', category:'Activity', title:'Massacan Rifugio — bike store, Nice (The Radavist)', url:'https://theradavist.com/massacan-rifugio-nice', notes:'Cycling in the hills above Nice.'},
+  {region:'nice', sec:'chateau', category:'Activity', title:"Nice June 2026 — Côte d'Azur (YouTube short)", url:'https://www.youtube.com/shorts/Hbppp94ybZ4', notes:'Atmosphere / inspiration.'},
+  {region:'nice', sec:'chateau', category:'Activity', title:'Mediterranean Season 2026 — 200+ events (Institut français)', url:'https://www.institutfrancais.com/en/magazine/a-la-une/season-mediterranee-2026-plus-200-events-france', notes:''},
+  {region:'nice', sec:'chateau', category:'Activity', title:'Mediterranean Season 2026 — programme (Institut français)', url:'https://www.institutfrancais.com/en/programme/project-support/mediterranean-season-2026', notes:''},
 ];
 
 let activeRegionFilter = null;
@@ -260,7 +264,7 @@ function buildDays(start, end){
 }
 
 function escapeHtml(s){return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function escapeAttr(s){let url=(s||'').trim();if(url && !/^https?:\/\//i.test(url))url='https://'+url;return escapeHtml(url);}
+function escapeAttr(s){let url=(s||'').trim();if(url && !/^https?:\/\//i.test(url) && !/\.(pdf|html?|png|jpe?g)$/i.test(url) && !url.startsWith('/'))url='https://'+url;return escapeHtml(url);}
 
 /* Password gate removed — site loads directly */
 
@@ -325,30 +329,79 @@ function render(){
       empty.textContent=term?'Nothing matches here yet.':'No links yet.';
       section.appendChild(empty);
     } else {
-      regionLinks.forEach(l=>{
-        if(l.block){
-          const details=document.createElement('details'); details.className='block-card';
-          const summary=document.createElement('summary'); summary.textContent=l.title;
-          details.appendChild(summary);
-          const body=document.createElement('div'); body.className='block-body';
-          body.innerHTML=l.block;
-          details.appendChild(body);
-          section.appendChild(details);
-          return;
-        }
-        const card=document.createElement('div'); card.className='link-card';
-        const notesHtml=l.notes?`<div class="notes">${escapeHtml(l.notes)}</div>`:'';
-        const mapHtml=l.map?`<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(l.map)}" target="_blank" rel="noopener">📍 Map</a>`:'';
-        const titleHtml=l.url
-          ? `<a href="${escapeAttr(l.url)}">${escapeHtml(l.title||l.url)}</a>`
-          : `<span class="link-title">${escapeHtml(l.title)}</span>`;
-        card.innerHTML=`<div class="link-main">${titleHtml}${notesHtml}${mapHtml}</div>`;
-        section.appendChild(card);
-      });
+      renderRegionBody(section, regionLinks, term);
     }
     content.appendChild(section);
   });
 }
+
+// Render one link entry (card or collapsible block) into a container
+function renderEntry(container, l){
+  if(l.block){
+    const details=document.createElement('details'); details.className='block-card';
+    const summary=document.createElement('summary'); summary.textContent=l.title;
+    details.appendChild(summary);
+    const body=document.createElement('div'); body.className='block-body';
+    body.innerHTML=l.block;
+    details.appendChild(body);
+    container.appendChild(details);
+    return;
+  }
+  const card=document.createElement('div'); card.className='link-card';
+  const notesHtml=l.notes?`<div class="notes">${escapeHtml(l.notes)}</div>`:'';
+  const mapHtml=l.map?`<a class="map-link" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(l.map)}" target="_blank" rel="noopener">📍 Map</a>`:'';
+  const titleHtml=l.url
+    ? `<a href="${escapeAttr(l.url)}"${l.newtab?' target="_blank" rel="noopener"':''}>${escapeHtml(l.title||l.url)}</a>`
+    : `<span class="link-title">${escapeHtml(l.title)}</span>`;
+  card.innerHTML=`<div class="link-main">${titleHtml}${notesHtml}${mapHtml}</div>`;
+  container.appendChild(card);
+}
+
+// Section order and display labels
+const SECTIONS=[
+  {id:'logistics', label:'Logistics'},
+  {id:'best-guide', label:'Best guide'},
+  {id:'guide', label:'Other guides'},
+  {id:'restaurant', label:'Restaurants'},
+  {id:'chateau', label:'Châteaux & sights'},
+  {id:'other', label:'Other'},
+];
+
+function renderRegionBody(section, regionLinks, term){
+  // If this region has no section tags yet, fall back to a flat list.
+  const hasSections=regionLinks.some(l=>l.sec);
+  if(!hasSections){
+    regionLinks.forEach(l=>renderEntry(section, l));
+    return;
+  }
+
+  // Pull out "grouped places": a place-group with 3+ members gets its own block.
+  const groupCounts={};
+  regionLinks.forEach(l=>{ if(l.group) groupCounts[l.group]=(groupCounts[l.group]||0)+1; });
+  const bigGroups=new Set(Object.keys(groupCounts).filter(g=>groupCounts[g]>=3));
+
+  const inGroup=l=>l.group && bigGroups.has(l.group);
+  const typeLinks=regionLinks.filter(l=>!inGroup(l));
+
+  // Type sections in defined order
+  SECTIONS.forEach(sec=>{
+    const items=typeLinks.filter(l=>(l.sec||'other')===sec.id);
+    if(items.length===0) return;
+    const h=document.createElement('div'); h.className='sec-label'; h.textContent=sec.label;
+    section.appendChild(h);
+    items.forEach(l=>renderEntry(section, l));
+  });
+
+  // Grouped-place blocks at the end, in first-appearance order
+  const seen=[];
+  regionLinks.forEach(l=>{ if(inGroup(l) && !seen.includes(l.group)) seen.push(l.group); });
+  seen.forEach(g=>{
+    const h=document.createElement('div'); h.className='sec-label'; h.textContent=g;
+    section.appendChild(h);
+    regionLinks.filter(l=>l.group===g).forEach(l=>renderEntry(section, l));
+  });
+}
+
 
 document.getElementById('search').addEventListener('input',e=>{searchTerm=e.target.value;render();});
 
