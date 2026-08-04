@@ -98,7 +98,6 @@
 const REGIONS = [
   {id:'france', name:'France', color:'#3A3A6E'},
   {id:'travel', name:'Travel', color:'#6E5A3A'},
-  {id:'safety', name:'Fire & Safety', color:'#A03A1E'},
   {id:'bordeaux', name:'Bordeaux', color:'#7A2E2E'},
   {id:'limoges', name:'Limoges', color:'#4A6C4E'},
   {id:'dordogne', name:'Dordogne', color:'#8B7355'},
@@ -122,11 +121,8 @@ const LINKS = [
   {region:'travel', category:'Other', title:'Car Rental — Sixt', url:'https://www.sixt.com/account/#/booking/1088564730', notes:''},
   {region:'travel', category:'Guide / Reading', title:'Gas & Parking — Rick Steves', url:'https://www.ricksteves.com/travel-tips/transportation/gas-parking', notes:''},
   {region:'travel', category:'Guide / Reading', title:'Speed limits — The Good Life France', url:'https://thegoodlifefrance.com/speed-limits-in-france/', notes:''},
-  // ---- Fire & Safety ----
-  {region:'safety', category:'Other', title:'Incendie en cours — live satellite map', url:'https://incendieencours.fr', notes:'NASA FIRMS hotspots, updates every 5 min'},
-  {region:'safety', category:'Other', title:'Météo-France — fire risk map', url:'https://meteofrance.com/meteo-des-forets', notes:'Daily département fire-risk forecast'},
-  {region:'safety', category:'Other', title:'IQAir — air quality map (France)', url:'https://www.iqair.com/air-quality-map?zoomLevel=5&lat=46.227638&lng=2.213749', notes:'Smoke & air quality'},
-  {region:'safety', category:'Other', title:'NASA Worldview — burn scars / imagery', url:'https://worldview.earthdata.nasa.gov/', notes:'Satellite view of burned areas (pick a date)'},
+  {region:'travel', category:'Other', title:'Incendie en cours — live fire map', url:'https://incendieencours.fr', notes:'NASA FIRMS hotspots, updates every 5 min'},
+  // ---- Fire & Safety (removed) ----
   {region:'travel', category:'Other', title:'Passion Monuments membership (Centre des monuments nationaux)', url:'https://www.monuments-nationaux.fr/en/passion-monuments-membership', notes:'Pass covering many national sites.'},
   // ---- Bordeaux ----
   {region:'bordeaux', sec:'logistics', category:'Lodging', title:'Lodging: Le Gîte du Château Bozelle', url:'https://www.booking.com/hotel/fr/le-gite-du-chateau-bozelle.html', notes:'Arveyres · Booking.com', map:'44.898011,-0.250233'},
@@ -145,7 +141,6 @@ const LINKS = [
   {region:'bordeaux', sec:'best-guide', category:'Guide / Reading', title:'Lost in Bordeaux', url:'https://www.lostinbordeaux.com/', notes:'Local blog — food, wine, day trips.'},
   {region:'bordeaux', sec:'guide', category:'Guide / Reading', title:'Map — Lost in Bordeaux', url:'https://www.google.com/maps/d/u/0/viewer?mid=1HBfzUosnbkc8x4Ky9fjD6vYpsQdFOOU&ll=44.840660574160275%2C-0.5746389623736947&z=17', notes:'Interactive map.'},
   {region:'bordeaux', sec:'guide', category:'Château / Sight', title:'Bordeaux tourisme', url:'https://www.bordeaux-tourism.co.uk', notes:'Official tourism site'},
-  {region:'bordeaux', sec:'guide', category:'Château / Sight', title:'Saint-Émilion tourisme', url:'https://www.saint-emilion-tourisme.com/en/', notes:'Official tourism site'},
   {region:'bordeaux', sec:'guide', category:'Guide / Reading', title:'Libourne tourisme', url:'https://www.grandlibournais-tourisme.com/en/', notes:'Official tourism site'},
   {region:'bordeaux', sec:'guide', category:'Guide / Reading', title:'Rick Steves forum — Bordeaux', url:'https://community.ricksteves.com/travel-forum/france/bordeaux-26f87354-3b50-41e7-9349-a8d7f19eb845', notes:''},
   {region:'bordeaux', sec:'guide', category:'Guide / Reading', title:'Reddit — Bordeaux (French)', url:'https://www.reddit.com/r/bordeaux/', notes:'Local subreddit'},
@@ -153,26 +148,36 @@ const LINKS = [
   {region:'bordeaux', sec:'restaurant', category:'Restaurant', title:'Restaurant: La Table de Catusseau', url:'https://www.latabledecatusseau.fr/en/', notes:'Pomerol'},
   {region:'bordeaux', sec:'restaurant', category:'Restaurant', title:'Restaurant: La Table de Pavie', url:'https://hoteldepavie.com/en/la-table-de-pavie.html', notes:'Saint-Émilion'},
   {region:'bordeaux', sec:'restaurant', category:'Restaurant', title:'Restaurant: Lard et Bouchon', url:'https://www.lardetbouchon.fr/le-restaurant/', notes:'Saint-Émilion'},
-  {region:'bordeaux', sec:'chateau', category:'Château / Sight', title:'Saint-Émilion', url:'https://www.lostinbordeaux.com/saint-emilion-by-train-an-easy-day-trip-from-bordeaux/', notes:'from Lost in Bordeaux'},
-  {region:'bordeaux', sec:'chateau', category:'Château / Sight', title:'Lacanau-Océan', url:'https://www.tripadvisor.com/Attractions-g196510-Activities-Lacanau_Ocean_Lacanau_Gironde_Nouvelle_Aquitaine.html', notes:'Atlantic beach town'},
+  {region:'bordeaux', sec:'chateau', category:'Château / Sight', title:'Saint-Émilion', block:`
+    <div class="taxi"><a href="https://www.saint-emilion-tourisme.com/en/" target="_blank" rel="noopener">Official tourism site</a></div>
+    <div class="taxi"><a href="https://www.lostinbordeaux.com/saint-emilion-by-train-an-easy-day-trip-from-bordeaux/" target="_blank" rel="noopener">Day trip by train</a><br><span class="taxi-meta">from Lost in Bordeaux</span></div>
+  `},
   {region:'bordeaux', sec:'chateau', category:'Activity', title:'Wine: Cité du Vin', url:'https://www.laciteduvin.com/en', notes:'Bordeaux'},
   // ---- Dordogne ----
   {region:'dordogne', sec:'logistics', category:'Lodging', title:'Lodging: Le Chèvrefeuille', url:'https://lechevrefeuille.com/', notes:'2099 Route des deux hameaux, Pechboutier, St Cyprien · Hotel direct', map:'44.901485,1.043773'},
   {region:'dordogne', sec:'best-guide', category:'Guide / Reading', title:'Best guide: Le Chèvrefeuille', url:'https://lechevrefeuille.com/useful-info/', notes:''},
   {region:'dordogne', sec:'best-guide', category:'Guide / Reading', title:"Sara's Recommended Days Out (PDF)", url:'chevrefeuille-guide.pdf', newtab:true, notes:'Le Chèvrefeuille guest guide'},
-  {region:'dordogne', sec:'chateau', group:'Font-de-Gaume & caves', category:'Château / Sight', title:'Font-de-Gaume, Combarelles & Cap-Blanc — guided tour', url:'https://www.sites-les-eyzies.fr/en/adult-groups-and-tourism-professionals/social-and-economic-committees-and-inter-cses/guided-tour-of-the-font-de-gaume-and-combarelles-caves-and-the-cap-blanc-shelter', notes:'Prehistoric cave art, Vézère Valley.'},
-  {region:'dordogne', sec:'chateau', group:'Font-de-Gaume & caves', category:'Château / Sight', title:'Font-de-Gaume — Sites of the Vézère Valley (practical info)', url:'https://www.sites-les-eyzies.fr/en/visit/practical-information#access-conditions-to-the-sites', notes:'Access conditions & how to visit.'},
-  {region:'dordogne', sec:'chateau', group:'Font-de-Gaume & caves', category:'Château / Sight', title:'Font-de-Gaume tickets tips (Le Chèvrefeuille)', url:'https://lechevrefeuille.com/font-de-gaume-tickets-2/', notes:'How to get the scarce tickets.'},
-  {region:'dordogne', sec:'chateau', group:'Font-de-Gaume & caves', category:'Château / Sight', title:'Font-de-Gaume tickets — English', url:'https://tickets.monuments-nationaux.fr/en-GB/home', notes:'Official booking'},
-  {region:'dordogne', sec:'chateau', group:'Font-de-Gaume & caves', category:'Château / Sight', title:'Font-de-Gaume tickets — French', url:'https://tickets.monuments-nationaux.fr/fr-FR/accueil', notes:'Réservation officielle'},
+  {region:'dordogne', sec:'reservation', category:'Château / Sight', title:'Font-de-Gaume & caves', block:`
+    <div class="taxi"><a href="https://www.sites-les-eyzies.fr/en/adult-groups-and-tourism-professionals/social-and-economic-committees-and-inter-cses/guided-tour-of-the-font-de-gaume-and-combarelles-caves-and-the-cap-blanc-shelter" target="_blank" rel="noopener">Guided tour — Font-de-Gaume, Combarelles &amp; Cap-Blanc</a><br><span class="taxi-meta">Prehistoric cave art, Vézère Valley</span></div>
+    <div class="taxi"><a href="https://www.sites-les-eyzies.fr/en/visit/practical-information#access-conditions-to-the-sites" target="_blank" rel="noopener">Sites of the Vézère Valley — practical info</a><br><span class="taxi-meta">Access conditions &amp; how to visit</span></div>
+    <div class="taxi"><a href="https://lechevrefeuille.com/font-de-gaume-tickets-2/" target="_blank" rel="noopener">Tickets tips (Le Chèvrefeuille)</a><br><span class="taxi-meta">How to get the scarce tickets</span></div>
+    <div class="taxi"><a href="https://tickets.monuments-nationaux.fr/en-GB/home" target="_blank" rel="noopener">Official booking — English</a></div>
+    <div class="taxi"><a href="https://tickets.monuments-nationaux.fr/fr-FR/accueil" target="_blank" rel="noopener">Réservation officielle — French</a></div>
+  `},
+  {region:'dordogne', sec:'reservation', category:'Château / Sight', title:'Montgolfières — Hot Air Balloon', block:`
+    <div class="taxi"><a href="https://www.perigord-dordogne-montgolfieres.com/en/" target="_blank" rel="noopener">Info &amp; booking</a><br><span class="taxi-meta">Sunrise/sunset flights over the Dordogne valley</span></div>
+    <div class="taxi"><a href="https://www.perigord-dordogne-montgolfieres.com/en/commande/order-received/296602/?key=wc_order_TxEaxI9vPtKgI" target="_blank" rel="noopener">Our reservation</a><br><span class="taxi-meta">Order confirmation (opens for Dan)</span></div>
+  `},
   {region:'dordogne', sec:'chateau', category:'Château / Sight', title:'Troglodyte sites of Dordogne (Lascaux-Périgord)', url:'https://www.lascaux-dordogne.com/en/a-voir-a-faire/decouvrir/sites-troglodytiques/', notes:'Cliff-dwelling sites.'},
   {region:'dordogne', sec:'guide', category:'Guide / Reading', title:'Lost in Bordeaux — Dordogne', url:'https://www.lostinbordeaux.com/category/discover-the-southwest-of-france/dordogne/', notes:''},
   {region:'dordogne', sec:'guide', category:'Guide / Reading', title:'Rick Steves forum — Four Weeks in France (trip report)', url:'https://community.ricksteves.com/travel-forum/trip-reports/just-returned-from-four-weeks-in-france-continued', notes:'Mentions the caves.'},
   // ---- Limoges ----
   {region:'limoges', sec:'logistics', category:'Lodging', title:'Lodging: La Maison Blanche', url:'https://www.booking.com/hotel/fr/la-maison-blanche-limoges.html', notes:'31 Avenue Saint-Surin, 87000 Limoges · Booking.com', map:'45.834091,1.249662'},
-  {region:'limoges', sec:'chateau', group:'Bernardaud (porcelain)', category:'Activity', title:'Bernardaud — official site', url:'https://www.bernardaud.com/en/us', notes:'Limoges porcelain since 1863.'},
-  {region:'limoges', sec:'chateau', group:'Bernardaud (porcelain)', category:'Activity', title:'Bernardaud Porcelain Factory — Tripadvisor', url:'https://www.tripadvisor.com/Attraction_Review-g187159-d2292752-Reviews-Bernardaud_Porcelain_Factory-Limoges_Haute_Vienne_Nouvelle_Aquitaine.html', notes:'Factory visit reviews.'},
-  {region:'limoges', sec:'chateau', group:'Bernardaud (porcelain)', category:'Activity', title:'Bernardaud Porcelain Factory — tickets (Trip.com)', url:'https://us.trip.com/travel-guide/attraction/limoges/bernardaud-porcelain-factory-18693081', notes:'Hours, prices, booking.'},
+  {region:'limoges', sec:'chateau', category:'Activity', title:'Bernardaud (porcelain)', block:`
+    <div class="taxi"><a href="https://www.bernardaud.com/en/us" target="_blank" rel="noopener">Official site</a><br><span class="taxi-meta">Limoges porcelain since 1863</span></div>
+    <div class="taxi"><a href="https://www.tripadvisor.com/Attraction_Review-g187159-d2292752-Reviews-Bernardaud_Porcelain_Factory-Limoges_Haute_Vienne_Nouvelle_Aquitaine.html" target="_blank" rel="noopener">Porcelain Factory — Tripadvisor</a><br><span class="taxi-meta">Factory visit reviews</span></div>
+    <div class="taxi"><a href="https://us.trip.com/travel-guide/attraction/limoges/bernardaud-porcelain-factory-18693081" target="_blank" rel="noopener">Factory tickets (Trip.com)</a><br><span class="taxi-meta">Hours, prices, booking</span></div>
+  `},
   // ---- Carcassonne / Languedoc ----
   {region:'carcassonne', sec:'logistics', category:'Lodging', title:'Lodging: Hôtel du Château', url:'https://www.hotelscharmedesign.com/en/hotel-du-chateau/home-carcasonne/', notes:'2 Rue Camille Saint-Saëns, 11000 Carcassonne · Booking TBD', map:'43.207651,2.367432'},
   {region:'carcassonne', sec:'chateau', category:'Château / Sight', title:'Boutique du Patrimoine', url:'https://www.boutiquedupatrimoine.fr/en/', notes:'Heritage / monuments shop.'},
@@ -361,9 +366,10 @@ function renderEntry(container, l){
 const SECTIONS=[
   {id:'logistics', label:'Logistics'},
   {id:'best-guide', label:'Best guide'},
+  {id:'reservation', label:'Reservation required'},
+  {id:'chateau', label:'Places to Visit'},
   {id:'guide', label:'Other guides'},
   {id:'restaurant', label:'Restaurants'},
-  {id:'chateau', label:'Châteaux & sights'},
   {id:'other', label:'Other'},
 ];
 
