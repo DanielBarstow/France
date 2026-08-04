@@ -15,7 +15,23 @@
   *{box-sizing:border-box;}
   body{margin:0;background:var(--parchment);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
   h1,h2,h3,.display{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-0.01em;}
-  .wrap{max-width:none;margin:0 auto;padding:24px 16px 80px;}
+  .wrap{max-width:none;margin:0 auto;padding:64px 16px 80px;}
+
+  /* Fixed top navigation */
+  #topnav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;gap:2px;align-items:stretch;
+    background:var(--ink);
+    padding:0 10px;
+    box-shadow:0 1px 6px rgba(0,0,0,0.25);
+  }
+  .nav-item{
+    appearance:none;border:none;background:none;cursor:pointer;
+    font-family:'Inter',sans-serif;font-size:14px;font-weight:600;
+    color:#cfcabb;padding:12px 16px;border-bottom:3px solid transparent;
+  }
+  .nav-item:hover{color:#fff;}
+  .nav-item.active{color:#fff;border-bottom-color:var(--rc,#fff);}
   header{margin-bottom:28px;}
   .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:0.14em;color:var(--wine);font-weight:700;margin-bottom:6px;}
   h1{font-size:34px;margin:0 0 6px;line-height:1.05;}
@@ -50,7 +66,7 @@
   .region-cols{display:block;}
   @media (min-width:900px){
     .region-cols{display:flex;gap:20px;align-items:flex-start;}
-    .col-left{flex:0 0 55%;max-width:55%;position:sticky;top:12px;align-self:flex-start;}
+    .col-left{flex:0 0 55%;max-width:55%;position:sticky;top:58px;align-self:flex-start;}
     .col-right{flex:1;min-width:0;}
     .col-left .day-strip{flex-wrap:wrap;overflow-x:visible;}
     .col-left .day-box{flex:0 0 auto;min-width:96px;}
@@ -93,19 +109,9 @@
 </head>
 <body>
 
+<nav id="topnav"></nav>
+
 <div class="wrap" id="app">
-  <header>
-    <div class="eyebrow">Dan &amp; Eva · One month, five regions</div>
-    <h1>France, Five Ways</h1>
-    <p class="subtitle">Every link we've found, sorted by where we'll be.</p>
-  </header>
-
-  <div class="route" id="routeStrip"></div>
-
-  <div class="toolbar">
-    <input type="text" id="search" placeholder="Search titles or notes…">
-  </div>
-
   <div id="content"></div>
 </div>
 
@@ -210,8 +216,7 @@ const LINKS = [
   {region:'nice', sec:'chateau', category:'Activity', title:'Mediterranean Season 2026 — programme (Institut français)', url:'https://www.institutfrancais.com/en/programme/project-support/mediterranean-season-2026', notes:''},
 ];
 
-let activeRegionFilter = null;
-let searchTerm = '';
+/* view state handled by currentRegion (defined in Rendering section) */
 
 /* ============================================================
    Day strips. For each location, set the stay's start/end dates
@@ -289,26 +294,24 @@ function escapeAttr(s){let url=(s||'').trim();if(url && !/^https?:\/\//i.test(ur
 /* Password gate removed — site loads directly */
 
 /* Rendering */
-function renderRouteStrip(){
-  const strip=document.getElementById('routeStrip'); strip.innerHTML='';
-  REGIONS.forEach((r,i)=>{
-    const div=document.createElement('div');
-    div.className='route-stop'+(activeRegionFilter===r.id?' active':'');
-    div.innerHTML=`<span class="n">${i+1}</span><span class="label">${r.name}</span><span class="bar" style="background:${r.color}"></span>`;
-    div.onclick=()=>{
-      activeRegionFilter=(activeRegionFilter===r.id)?null:r.id;
-      render();
-      const el=document.getElementById('region-'+r.id);
-      if(el && activeRegionFilter) el.scrollIntoView({behavior:'smooth',block:'start'});
-    };
-    strip.appendChild(div);
+let currentRegion = 'france';   // always open on France
+
+function renderNav(){
+  const nav=document.getElementById('topnav'); nav.innerHTML='';
+  REGIONS.forEach(r=>{
+    const a=document.createElement('button');
+    a.className='nav-item'+(currentRegion===r.id?' active':'');
+    a.textContent=r.name;
+    a.style.setProperty('--rc', r.color);
+    a.onclick=()=>{ currentRegion=r.id; render(); window.scrollTo({top:0}); };
+    nav.appendChild(a);
   });
 }
 function render(){
-  renderRouteStrip();
+  renderNav();
   const content=document.getElementById('content'); content.innerHTML='';
-  const term=searchTerm.trim().toLowerCase();
-  const regionsToShow=activeRegionFilter?REGIONS.filter(r=>r.id===activeRegionFilter):REGIONS;
+  const term='';
+  const regionsToShow=REGIONS.filter(r=>r.id===currentRegion);
   regionsToShow.forEach(region=>{
     let regionLinks=LINKS.filter(l=>l.region===region.id);
     if(term) regionLinks=regionLinks.filter(l=>(l.title||'').toLowerCase().includes(term)||(l.notes||'').toLowerCase().includes(term));
@@ -444,8 +447,6 @@ function renderRegionBody(section, regionLinks, term){
   });
 }
 
-
-document.getElementById('search').addEventListener('input',e=>{searchTerm=e.target.value;render();});
 
 function init(){ render(); }
 init();
