@@ -15,7 +15,7 @@
   *{box-sizing:border-box;}
   body{margin:0;background:var(--parchment);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
   h1,h2,h3,.display{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-0.01em;}
-  .wrap{max-width:900px;margin:0 auto;padding:28px 20px 80px;}
+  .wrap{max-width:1280px;margin:0 auto;padding:28px 28px 80px;}
   header{margin-bottom:28px;}
   .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:0.14em;color:var(--wine);font-weight:700;margin-bottom:6px;}
   h1{font-size:34px;margin:0 0 6px;line-height:1.05;}
@@ -42,6 +42,21 @@
   .cat-label{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#8a8570;font-weight:700;margin:0 0 8px;}
   .sec-label{font-size:12px;text-transform:uppercase;letter-spacing:0.09em;color:var(--rc,#8a8570);font-weight:700;margin:18px 0 9px;opacity:0.85;}
   .sec-label:first-of-type{margin-top:4px;}
+  .region-map{margin:0 0 20px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;}
+  .region-map iframe{display:block;width:100%;height:380px;border:0;}
+  @media (max-width:600px){ .region-map iframe{height:300px;} }
+
+  /* Two-column region layout (sticky left) */
+  .region-cols{display:block;}
+  @media (min-width:900px){
+    .region-cols{display:flex;gap:26px;align-items:flex-start;}
+    .col-left{flex:0 0 40%;max-width:40%;position:sticky;top:16px;align-self:flex-start;}
+    .col-right{flex:1;min-width:0;}
+    .col-left .day-strip{flex-wrap:wrap;overflow-x:visible;}
+    .col-left .day-box{flex:0 0 auto;min-width:96px;}
+    .col-left .region-map{margin-bottom:0;}
+    .col-left .region-map iframe{height:420px;}
+  }
   .link-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:8px;}
   .link-main a{font-weight:600;color:var(--ink);text-decoration:none;font-size:15px;}
   .link-main a:hover{text-decoration:underline;}
@@ -100,7 +115,7 @@ const REGIONS = [
   {id:'travel', name:'Travel', color:'#6E5A3A'},
   {id:'bordeaux', name:'Bordeaux', color:'#7A2E2E'},
   {id:'limoges', name:'Limoges', color:'#4A6C4E'},
-  {id:'dordogne', name:'Dordogne', color:'#8B7355'},
+  {id:'dordogne', name:'Dordogne', color:'#8B7355', mapEmbed:'https://www.google.com/maps/d/embed?mid=1tCustQHTZUSLXjToAsokVqT7D0mv42U&ehbc=2E312F'},
   {id:'carcassonne', name:'Carcassonne', color:'#B5602E'},
   {id:'nice', name:'Riviera', color:'#2C5F6F'},
 ];
@@ -310,7 +325,12 @@ function render(){
     head.innerHTML=`<h2>${region.name}</h2><span class="region-count">${headMeta}</span>`;
     section.appendChild(head);
 
-    // Day strip (if this location has a defined stay)
+    // Two-column wrapper: left = calendar+map (sticky), right = links
+    const cols=document.createElement('div'); cols.className='region-cols';
+    const colLeft=document.createElement('div'); colLeft.className='col-left';
+    const colRight=document.createElement('div'); colRight.className='col-right';
+
+    // Day strip (if this location has a defined stay) — goes in LEFT column
     const stay=STAYS[region.id];
     if(stay && !term){
       let days;
@@ -327,15 +347,31 @@ function render(){
         box.innerHTML=`<div class="day-date">${day.label}</div>${note?`<div class="day-note">${escapeHtml(note).replace(/\n/g,'<br>')}</div>`:''}`;
         strip.appendChild(box);
       });
-      section.appendChild(strip);
+      colLeft.appendChild(strip);
     }
+
+    // Region map (embedded Google My Map) — goes in LEFT column
+    if(region.mapEmbed && !term){
+      const mapWrap=document.createElement('div'); mapWrap.className='region-map';
+      const iframe=document.createElement('iframe');
+      iframe.src=region.mapEmbed;
+      iframe.loading='lazy';
+      iframe.title=region.name+' map';
+      mapWrap.appendChild(iframe);
+      colLeft.appendChild(mapWrap);
+    }
+
+    // Links — go in RIGHT column
     if(regionLinks.length===0){
       const empty=document.createElement('div'); empty.className='empty';
       empty.textContent=term?'Nothing matches here yet.':'No links yet.';
-      section.appendChild(empty);
+      colRight.appendChild(empty);
     } else {
-      renderRegionBody(section, regionLinks, term);
+      renderRegionBody(colRight, regionLinks, term);
     }
+    cols.appendChild(colLeft);
+    cols.appendChild(colRight);
+    section.appendChild(cols);
     content.appendChild(section);
   });
 }
